@@ -1,4 +1,4 @@
-/* Reset e Box Model (Seu CSS Original - OK) */
+/* Reset and Box Model */
 *,
 *::before,
 *::after {
@@ -7,15 +7,15 @@
   padding: 0;
 }
 
-/* Corpo e fundo (Seu CSS Original - OK, corresponde à imagem) */
+/* Body and background */
 body {
-  font-family: Arial, Helvetica, sans-serif ;
+  font-family: Arial, Helvetica, sans-serif;
   background: url("/images/site/checkerboard.jpg");
-  background-size: 1000px 1000px; /* Ajuste o tamanho conforme necessário para a repetição desejada */
+  background-size: 1000px 1000px; /* Adjust size as needed for tiling */
   color: #000;
 }
 
-/* Wrapper principal (Seu CSS Original - OK, corresponde à imagem) */
+/* Main wrapper */
 #wrapper {
   max-width: 850px;
   margin: 20px auto;
@@ -25,7 +25,7 @@ body {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Cabeçalho (Seu CSS Original - OK) */
+/* Header */
 header#top-header {
   display: flex;
   justify-content: space-between;
@@ -34,89 +34,88 @@ header#top-header {
 }
 
 .siteName a {
-  font-size: 1.5rem; /* Na imagem parece um pouco maior, ajuste se desejar */
+  font-size: 1.5rem; /* Increase if needed */
   font-weight: bold;
   text-decoration: none;
   color: #000;
 }
 
 #tools a {
-  font-size: 0.9rem; /* Na imagem parece um pouco maior, ajuste se desejar */
+  font-size: 0.9rem; /* Increase if needed */
   color: #000;
   text-decoration: none;
 }
 
-/* Navegação */
+/* Navigation */
 nav ul {
   list-style: none;
   display: flex;
-  justify-content: space-around; /* Mantém os itens distribuídos */
-  background-color: #333;      /* Fundo escuro, como na referência */
+  justify-content: space-around;
+  background-color: #333; /* Dark background as in reference */
   padding: 0;
-  margin: 20px 0;               /* Margem acima e abaixo da navegação */
-  border-radius: 5px;           /* Opcional: para arredondar as bordas da barra de navegação */
+  margin: 20px 0;
+  border-radius: 5px; /* Optional: rounded corners */
 }
 
 nav li {
-  font-weight: bold; /* Já estamos aplicando no 'a', então pode ser removido daqui se desejar */
+  font-weight: bold; /* Already applied to 'a', can be removed */
 }
 
 nav li a {
-  display: block;             /* Faz o link ocupar todo o espaço do <li> */
-  padding: 12px 18px;         /* Aumentei um pouco o padding para mais conforto */
-  color: white;               /* Garante a cor branca do texto */
-  text-decoration: none;      /* Remove o sublinhado do link */
-  font-weight: bold;          /* Deixa o texto em negrito, como na referência */
-  font-size: 1.1rem;          /* AUMENTA O TAMANHO DA FONTE. Ajuste este valor (ex: 1rem, 1.2rem, 16px, 18px) conforme o seu gosto. */
-  text-align: center;         /* Centraliza o texto dentro do espaço do link/botão */
-  transition: background-color 0.3s ease; /* Efeito suave para o hover */
+  display: block;
+  padding: 12px 18px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
 nav li a:hover {
-  background-color: #555;     /* Cor de fundo no hover */
-  color: #f0f0f0;             /* Cor do texto no hover */
+  background-color: #555;
+  color: #f0f0f0;
 }
 
-
-/* Títulos principais (Seu CSS Original - OK) */
+/* Main titles */
 main h1 {
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
-/* Seção do herói - Ajustes significativos para sobreposição e estilo */
+/* Hero section */
 #hero {
   position: relative;
   margin-bottom: 30px;
   padding: 20px;
-  min-height: 300px; /* Ajuste conforme necessário */
-  z-index: 1; /* Coloca a seção em uma camada */
+  min-height: 300px;
+  z-index: 1;
 }
 
-/* Conteúdo textual dentro do herói */
+/* Text content in hero */
 .hero-content {
   position: relative;
   z-index: 2;
-  width: 38%; /* Ocupa mais espaço, ajuste conforme necessário */
-  margin-left: -1%; /* Move um pouco para a direita */
+  width: 38%;
+  margin-left: -1%;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.85); /* Fundo branco com transparência */
+  background-color: rgba(255, 255, 255, 0.85);
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Imagem do herói */
+/* Hero image */
 #hero .hero-image {
-  position: absolute; /* Permite que a imagem fique fora do fluxo normal */
-  top: 0; /* Começa do topo da seção */
-  left: 0; /* Alinha à esquerda */
-  width: 100%; /* Faz a imagem ocupar toda a largura da seção */
-  height: 100%; /* Faz a imagem ocupar toda a altura da seção */
-  object-fit: contain; /* Faz com que a imagem cubra a área sem distorcer */
-  z-index: 1; /* Coloca a imagem atrás do conteúdo textual */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
 }
 
-/* Estilos para h2, ul, li, button dentro de .hero-content */
+/* Styles for h2, ul, li, button inside hero-content */
 #hero h2 {
   font-size: 2.2rem;
   color: #007bff;
@@ -149,22 +148,21 @@ main h1 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-
-/* Seções gerais */
+/* Generic sections */
 section {
   margin-bottom: 30px;
 }
 
-/* Layout lado a lado para upgrades e reviews */
+/* Side-by-side layout for upgrades and reviews */
 .two-column-layout {
   display: flex;
   gap: 30px;
   justify-content: space-between;
-  align-items: flex-start; /* Mantém o alinhamento no topo */
+  align-items: flex-start;
 }
 
 .two-column-layout section {
-  flex: 1; /* Distribui o espaço igualmente */
+  flex: 1;
 }
 
 /* Upgrades */
@@ -178,15 +176,15 @@ section {
 
 #upgrades .grid-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
 #upgrades .upgrade {
-  background-color: #add8e6; /* Azul claro */
+  background-color: #add8e6;
   padding: 15px;
   text-align: center;
-  border: 1px solid #00008b; /* Borda azul escura */
+  border: 1px solid #00008b;
   border-radius: 10px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -201,13 +199,13 @@ section {
 }
 
 #upgrades .upgrade p {
-  color: #0000CD; /* Azul médio */
+  color: #0000CD;
   font-weight: bold;
   font-size: 0.9rem;
   margin-top: 5px;
 }
 
-/* Avaliações */
+/* Reviews */
 #reviews h2 {
   margin-bottom: 10px;
 }
@@ -223,7 +221,7 @@ section {
   font-size: 0.95rem;
 }
 
-/* Rodapé */
+/* Footer */
 footer {
   text-align: center;
   font-size: 0.8rem;
