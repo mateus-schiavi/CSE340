@@ -1,6 +1,160 @@
-/******* Change Box Model ***************/
+/* Reset e Box Model */
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Corpo e fundo */
+body {
+  font-family: Arial, sans-serif;
+  background: url("/images/site/checkerboard.jpg");
+  background-size: 100px 100px;
+  color: #000;
+}
+
+/* Wrapper principal */
+#wrapper {
+  max-width: 850px;
+  margin: 20px auto;
+  background-color: white;
+  border: 5px solid cyan;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Cabeçalho superior */
+header#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.siteName a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+}
+
+#tools a {
+  font-size: 0.9rem;
+  color: #000;
+  text-decoration: none;
+}
+
+/* Navegação */
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  background-color: #333;
+  padding: 10px 0;
+  margin: 20px 0;
+}
+
+nav li {
+  color: white;
+  font-weight: bold;
+}
+
+/* Títulos principais */
+main h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* Seção do herói */
+#hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+#hero img {
+  max-width: 300px;
+  height: auto;
+}
+
+#hero ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.button,
+#hero button {
+  background-color: #0a7be9;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* Seções gerais */
+section {
+  margin-bottom: 30px;
+}
+
+/* Upgrades */
+#upgrades {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+#upgrades h2 {
+  margin-bottom: 10px;
+}
+
+#upgrades .grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  justify-content: center;
+}
+
+#upgrades .upgrade {
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+#upgrades .upgrade img {
+  max-width: 80px;
+  height: auto;
+  margin-bottom: 5px;
+}
+
+/* Avaliações */
+#reviews ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+#reviews li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* Rodapé */
+footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 20px;
 }
