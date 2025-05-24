@@ -32,10 +32,11 @@ Util.buildClassificationGrid = async function (data) {
     if (data.length > 0) {
         grid = '<ul id="inv-display">'
         data.forEach(vehicle => {
+            const imagePath = vehicle.inv_thumbnail.startsWith('images/') ? '/' + vehicle.inv_thumbnail : '/images/' + vehicle.inv_thumbnail;
             grid += '<li>'
             grid += '<a href="../../inv/detail/' + vehicle.inv_id
                 + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model
-                + 'details"><img src="' + vehicle.inv_thumbnail
+                + ' details"><img src="' + imagePath
                 + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model
                 + ' on CSE Motors" /></a>'
             grid += '<div class="namePrice">'
@@ -56,5 +57,22 @@ Util.buildClassificationGrid = async function (data) {
     }
     return grid
 }
+
+Util.buildDetailView = async function (vehicle) {
+    let view = `
+    <section id="vehicle-detail">
+      <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}" />
+      <div>
+        <h2>${vehicle.inv_make} ${vehicle.inv_model} (${vehicle.inv_year})</h2>
+        <p><strong>Price:</strong> $${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</p>
+        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+        <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+        <p><strong>Mileage:</strong> ${new Intl.NumberFormat('en-US').format(vehicle.inv_miles)} miles</p>
+      </div>
+    </section>
+  `
+    return view
+}
+
 
 module.exports = Util

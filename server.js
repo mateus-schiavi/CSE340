@@ -23,6 +23,7 @@ app.set("layout", "./layouts/layout")
 /* ***********************
  * Routes
  *************************/
+app.use(express.static("public"))
 app.use(static)
 
 // Index Route
