@@ -25,61 +25,36 @@ Util.getNav = async function (req, res, next) {
 }
 
 /* **************************************
- * Build the classification view HTML
- *************************************** */
-Util.buildClassificationGrid = async function (data) {
-    let grid
-    if (data.length > 0) {
-        grid = '<ul id="inv-display">'
-        data.forEach(vehicle => {
-            const imageName = vehicle.inv_thumbnail.split('/').pop()
-            const imagePath = `/images/vehicles/${imageName}`
-
-            grid += '<li>'
-            grid += '<a href="../../inv/detail/' + vehicle.inv_id
-                + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model
-                + ' details"><img src="' + imagePath
-                + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model
-                + ' on CSE Motors" /></a>'
-            grid += '<div class="namePrice">'
-            grid += '<hr />'
-            grid += '<h2>'
-            grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View '
-                + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
-                + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
-            grid += '</h2>'
-            grid += '<span>$'
-                + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
-            grid += '</div>'
-            grid += '</li>'
-        })
-        grid += '</ul>'
-    } else {
-        grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
-    }
-    return grid
-}
-
-/* **************************************
- * Build the vehicle detail view HTML
- *************************************** */
-Util.buildDetailView = async function (vehicle) {
-    const imageName = vehicle.inv_image.split('/').pop()
-    const imagePath = `/images/vehicles/${imageName}`
-
-    let view = `
-    <section id="vehicle-detail">
-      <img src="${imagePath}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}" />
-      <div>
-        <h2>${vehicle.inv_make} ${vehicle.inv_model} (${vehicle.inv_year})</h2>
-        <p><strong>Price:</strong> $${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</p>
-        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
-        <p><strong>Color:</strong> ${vehicle.inv_color}</p>
-        <p><strong>Mileage:</strong> ${new Intl.NumberFormat('en-US').format(vehicle.inv_miles)} miles</p>
-      </div>
-    </section>
-  `
-    return view
+* Build the classification view HTML
+* ************************************ */
+Util.buildClassificationGrid = async function(data){
+  let grid
+  if(data.length > 0){
+    grid = '<ul id="inv-display">'
+    data.forEach(vehicle => { 
+      grid += '<li>'
+      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
+      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
+      + 'details"><img src="' + vehicle.inv_thumbnail 
+      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+      +' on CSE Motors" /></a>'
+      grid += '<div class="namePrice">'
+      grid += '<hr />'
+      grid += '<h2>'
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+      grid += '</h2>'
+      grid += '<span>$' 
+      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+      grid += '</div>'
+      grid += '</li>'
+    })
+    grid += '</ul>'
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
 }
 
 module.exports = Util
