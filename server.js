@@ -12,6 +12,7 @@ const static = require("./routes/static")
 const expressLayouts = require("express-ejs-layouts")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const utilities = require("./utilities")
 
 
 /* ***********************
@@ -27,8 +28,13 @@ app.set("layout", "./layouts/layout")
 app.use(static)
 
 // Index Route
-app.get("/", baseController.buildHome)
+app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
+
+app.get("/cause-error", (req, res, next) => {
+  next(new Error("Middleware Test Error"))
+})
+
 
 // Middleware para tratar erros 404 (rota não encontrada)
 app.use((req, res, next) => {
@@ -40,16 +46,20 @@ app.use((req, res, next) => {
 // Middleware
 
 app.use(async (err, req, res, next) => {
-  const status = err.status || 500
-  const message = err.message || "Internal Server Error"
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
 
-  const utilities = require("./utilities")
-  const nav = await utilities.getNav()
+  let message
+  if (err.status == 404) {
+    message = err.message
+  } else {
+    message = 'Oh no! There was a crash. Maybe try a different route?'
+  }
 
-  res.status(status).render("errors/error", {
-    title: `Error ${status}`,
+  res.status(err.status || 500).render("errors/error", {
+    title: err.status || 'Server Error',
     message,
-    error: process.env.NODE_ENV === "development" ? err : {}, 
+    error: process.env.NODE_ENV === "development" ? err : {},  // << aqui!
     nav
   })
 })

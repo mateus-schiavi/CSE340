@@ -11,7 +11,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: url("/images/site/checkerboard.jpg");
-  background-size: 1000px 1000px; /* Adjust size as needed for tiling */
+  background-size: 1000px 1000px;
   color: #000;
 }
 
@@ -34,14 +34,14 @@ header#top-header {
 }
 
 .siteName a {
-  font-size: 1.5rem; /* Increase if needed */
+  font-size: 1.5rem;
   font-weight: bold;
   text-decoration: none;
   color: #000;
 }
 
 #tools a {
-  font-size: 0.9rem; /* Increase if needed */
+  font-size: 0.9rem;
   color: #000;
   text-decoration: none;
 }
@@ -51,14 +51,10 @@ nav ul {
   list-style: none;
   display: flex;
   justify-content: space-around;
-  background-color: #333; /* Dark background as in reference */
+  background-color: #333;
   padding: 0;
   margin: 20px 0;
-  border-radius: 5px; /* Optional: rounded corners */
-}
-
-nav li {
-  font-weight: bold; /* Already applied to 'a', can be removed */
+  border-radius: 5px;
 }
 
 nav li a {
@@ -92,7 +88,6 @@ main h1 {
   z-index: 1;
 }
 
-/* Text content in hero */
 .hero-content {
   position: relative;
   z-index: 2;
@@ -104,7 +99,6 @@ main h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Hero image */
 #hero .hero-image {
   position: absolute;
   top: 0;
@@ -115,7 +109,7 @@ main h1 {
   z-index: 1;
 }
 
-/* Styles for h2, ul, li, button inside hero-content */
+/* Hero inner content */
 #hero h2 {
   font-size: 2.2rem;
   color: #007bff;
@@ -153,7 +147,7 @@ section {
   margin-bottom: 30px;
 }
 
-/* Side-by-side layout for upgrades and reviews */
+/* Layout for upgrades and reviews */
 .two-column-layout {
   display: flex;
   gap: 30px;
@@ -229,4 +223,129 @@ footer {
   margin-top: 20px;
   border-top: 1px solid #ccc;
   padding-top: 15px;
+}
+
+/* Vehicle Detail Layout */
+.vehicle-detail {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.vehicle-detail img {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.vehicle-info {
+  flex: 1;
+}
+
+.vehicle-info h2 {
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.vehicle-info p {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Telas até 768px: layout empilhado */
+@media (max-width: 768px) {
+  #wrapper {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  header#top-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  nav li a {
+    padding: 10px;
+    text-align: left;
+  }
+
+  .two-column-layout {
+    flex-direction: column;
+  }
+
+  .hero-content {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .vehicle-detail {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vehicle-detail img {
+    max-width: 100%;
+  }
+
+  .vehicle-info {
+    width: 100%;
+  }
+
+  #upgrades .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Telas até 480px: ajustes adicionais para celular */
+@media (max-width: 480px) {
+  body {
+    background-size: 500px 500px;
+  }
+
+  .siteName a {
+    font-size: 1.2rem;
+  }
+
+  #tools a {
+    font-size: 0.8rem;
+  }
+
+  nav li a {
+    font-size: 1rem;
+  }
+
+  main h1 {
+    font-size: 1.5rem;
+  }
+
+  #hero h2 {
+    font-size: 1.6rem;
+  }
+
+  #hero button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+  .vehicle-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .vehicle-info p {
+    font-size: 0.95rem;
+  }
 }
