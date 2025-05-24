@@ -29,6 +29,31 @@ app.use(static)
 // Index Route
 app.get("/", baseController.buildHome)
 app.use("/inv", inventoryRoute)
+
+// Middleware para tratar erros 404 (rota não encontrada)
+app.use((req, res, next) => {
+  const err = new Error("Page Not Found")
+  err.status = 404
+  next(err)
+})
+
+// Middleware
+
+app.use(async (err, req, res, next) => {
+  const status = err.status || 500
+  const message = err.message || "Internal Server Error"
+
+  const utilities = require("./utilities")
+  const nav = await utilities.getNav()
+
+  res.status(status).render("errors/error", {
+    title: `Error ${status}`,
+    message,
+    error: process.env.NODE_ENV === "development" ? err : {}, 
+    nav
+  })
+})
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
