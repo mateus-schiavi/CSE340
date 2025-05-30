@@ -2,35 +2,33 @@
 <html lang="en">
 
     <head>
-        <meta charset="UTF-8" />
-        <title>Add Classification - CSE Motors</title>
+        <meta charset="UTF-8">
+        <title>Add Classification</title>
     </head>
 
     <body>
+        <%- nav %>
         <h1>Add New Classification</h1>
-
-        <% if (errors && errors.length > 0) { %>
-        <ul>
-            <% errors.forEach(err => { %>
-            <li><%= err.msg %></li>
-            <% }) %>
-        </ul>
-        <% } %>
 
         <% if (message) { %>
         <p class="flash-message"><%= message %></p>
         <% } %>
 
-        <form action="/inv/classification/add" method="POST">
-            <label for="classification_name">Classification Name:</label>
-            <input type="text" id="classification_name" name="classification_name" required pattern="^[A-Za-z0-9]+$"
-                title="No spaces or special characters allowed"
-                value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>" />
+        <% if (errors && errors.length > 0) { %>
+        <ul>
+            <% errors.forEach(function(error) { %>
+            <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+        <% } %>
 
+        <form action="/inv/classification/add" method="POST">
+            <label for="classification_name">Classification Name</label>
+            <input type="text" id="classification_name" name="classification_name"
+                value="<%= typeof classification_name != 'undefined' ? classification_name : '' %>"
+                pattern="^[A-Za-z0-9]+$" title="No spaces or special characters allowed" required />
             <button type="submit">Add Classification</button>
         </form>
-
-        <p><a href="/inv">Back to Management</a></p>
     </body>
 
 </html>

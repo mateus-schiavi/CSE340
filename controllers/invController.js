@@ -97,4 +97,80 @@ invCont.addClassificationProcess = async (req, res) => {
   }
 }
 
+invCont.addInventoryView = async (req, res) => {
+  const message = req.flash('message');
+  const errors = [];
+  const classificationList = await utilities.buildClassificationList();
+
+  res.render('inventory/add-inventory', {
+    message,
+    errors,
+    classificationList,
+  });
+};
+
+invCont.addInventoryProcess = async (req, res) => {
+  const errors = validationResult(req);
+  const classificationList = await utilities.buildClassificationList(req.body.classification_id);
+
+  if (!errors.isEmpty()) {
+    return res.render('inventory/add-inventory', {
+      message: null,
+      errors: errors.array(),
+      classificationList,
+      // envia os valores preenchidos para sticky form
+      ...req.body
+    });
+  }
+
+  try {
+    const {
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_price,
+      inv_miles,
+      inv_color,
+      inv_image = '/images/no-image-available.png',
+      inv_thumbnail = '/images/no-image-available.png',
+    } = req.body;
+
+    const result = await invModel.insertInventory({
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_price,
+      inv_miles,
+      inv_color,
+      inv_image,
+      inv_thumbnail
+    });
+
+    if (result) {
+      req.flash('message', `${inv_make} ${inv_model} added successfully to the inventory.`);
+      return res.redirect('/inv');
+    } else {
+      res.render('inventory/add-inventory', {
+        message: null,
+        errors: [{ msg: 'Failed to add inventory item.' }],
+        classificationList,
+        ...req.body
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).render('inventory/add-inventory', {
+      message: null,
+      errors: [{ msg: 'Server error.' }],
+      classificationList,
+      ...req.body
+    });
+  }
+};
+
+
 module.exports = invCont
