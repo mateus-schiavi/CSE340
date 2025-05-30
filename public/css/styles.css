@@ -405,3 +405,73 @@ footer {
     color: #007bff;
     text-decoration: none;
 }
+
+/* === Container Compacto === */
+.register-container {
+    max-width: 500px;
+    margin: 1rem auto;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.register-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+/* === Formulário Ajustado === */
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Reduz o espaçamento entre os campos */
+}
+
+/* === Labels e Inputs Compactos === */
+.register-form label {
+    font-weight: 600;
+    color: #444;
+    font-size: 0.9rem; /* Labels menores */
+    margin-bottom: 0.25rem;
+}
+
+.register-form input {
+    padding: 0.6rem; /* Inputs mais compactos */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+/* === Divisores (hr) === */
+.divider {
+    margin: 0.5rem 0; /* Menor espaçamento */
+}
+
+/* === Botão Centralizado e Arredondado === */
+.register-button {
+    background-color: #007BFF;
+    color: white;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 25px; /* Bordas totalmente arredondadas */
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 50%; /* Largura reduzida para centralização */
+    margin: 0.5rem auto; /* Centraliza horizontalmente */
+    display: block; /* Permite margin:auto funcionar */
+}
+
+.register-button:hover {
+    background-color: #0056b3;
+}
+
+/* === Link de Login Ajustado === */
+.login-link {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}

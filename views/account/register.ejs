@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head', { title: 'Register - CSE Motors' }) %>
+
+    <body>
+        <div id="wrapper">
+            <%- include('../partials/header') %>
+            <%- include('../partials/navigation') %>
+
+            <main class="register-container">
+                <h1>Register</h1>
+
+                <form action="/account/register" method="POST" class="register-form">
+                    <!-- First Name -->
+                    <label for="account_firstname">First name</label>
+                    <input type="text" id="account_firstname" name="account_firstname" required>
+                    <hr class="divider">
+
+                    <!-- Last Name -->
+                    <label for="account_lastname">Last name</label>
+                    <input type="text" id="account_lastname" name="account_lastname" required>
+                    <hr class="divider">
+
+                    <!-- Email -->
+                    <label for="account_email">Email address</label>
+                    <input type="email" id="account_email" name="account_email" required>
+                    <hr class="divider">
+
+                    <!-- Password -->
+                    <label for="account_password">Password</label>
+                    <input type="password" id="account_password" name="account_password" required>
+                    <hr class="divider">
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="register-button">Register</button>
+                    <div class="login-link">
+                        <p>Already have an account? <a href="/account/login">Login</a></p>
+                    </div>
+                </form>
+            </main>
+
+            <%- include('../partials/footer') %>
+        </div>
+    </body>
+
+</html>
