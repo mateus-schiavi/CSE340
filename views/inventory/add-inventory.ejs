@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Add Inventory Item - CSE Motors</title>
+    </head>
+
+    <body>
+        <h1>Add New Inventory Item</h1>
+
+        <% if (errors && errors.length > 0) { %>
+        <ul>
+            <% errors.forEach(err => { %>
+            <li><%= err.msg %></li>
+            <% }) %>
+        </ul>
+        <% } %>
+
+        <% if (message) { %>
+        <p class="flash-message"><%= message %></p>
+        <% } %>
+
+        <form action="/inv/inventory/add" method="POST">
+            <label for="classification_id">Classification:</label>
+            <%- classificationList %> <!-- select dinâmico -->
+
+            <label for="inv_make">Make:</label>
+            <input type="text" id="inv_make" name="inv_make" required value="<%= inv_make || '' %>">
+
+            <label for="inv_model">Model:</label>
+            <input type="text" id="inv_model" name="inv_model" required value="<%= inv_model || '' %>">
+
+            <label for="inv_year">Year:</label>
+            <input type="number" id="inv_year" name="inv_year" required value="<%= inv_year || '' %>">
+
+            <label for="inv_description">Description:</label>
+            <textarea id="inv_description" name="inv_description" required><%= inv_description || '' %></textarea>
+
+            <label for="inv_price">Price:</label>
+            <input type="number" id="inv_price" name="inv_price" required value="<%= inv_price || '' %>" step="0.01">
+
+            <label for="inv_miles">Miles:</label>
+            <input type="number" id="inv_miles" name="inv_miles" required value="<%= inv_miles || '' %>">
+
+            <label for="inv_color">Color:</label>
+            <input type="text" id="inv_color" name="inv_color" required value="<%= inv_color || '' %>">
+
+            <!-- imagem, thumbnail - use paths padrão -->
+            <label for="inv_image">Image Path:</label>
+            <input type="text" id="inv_image" name="inv_image" value="<%= inv_image || '/images/no-image.png' %>">
+
+            <label for="inv_thumbnail">Thumbnail Path:</label>
+            <input type="text" id="inv_thumbnail" name="inv_thumbnail"
+                value="<%= inv_thumbnail || '/images/no-image-tn.png' %>">
+
+            <button type="submit">Add Inventory Item</button>
+        </form>
+    </body>
+
+</html>

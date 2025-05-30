@@ -10,6 +10,14 @@
             <main class="register-container">
                 <h1>Register</h1>
 
+                <% if (errors) { %>
+                <ul class="notice">
+                    <% for (let i = 0; i < errors.array().length; i++) { %>
+                    <li><%= errors.array()[i].msg %></li>
+                    <% } %>
+                </ul>
+                <% } %>
+
                 <form action="/account/register" method="POST" class="register-form">
                     <!-- First Name -->
                     <label for="account_firstname">First name</label>
@@ -23,12 +31,19 @@
 
                     <!-- Email -->
                     <label for="account_email">Email address</label>
-                    <input type="email" id="account_email" name="account_email" required>
+                    <input type="email" id="account_email" name="account_email" required
+                        placeholder="Enter a valid email address">
                     <hr class="divider">
 
                     <!-- Password -->
                     <label for="account_password">Password</label>
-                    <input type="password" id="account_password" name="account_password" required>
+                    <span class="password-hint">
+                        Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter, and 1
+                        special character.
+                    </span>
+                    <input type="password" id="account_password" name="account_password" required
+                        placeholder="Enter a strong password"
+                        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
                     <hr class="divider">
 
                     <!-- Submit Button -->
@@ -39,8 +54,10 @@
                 </form>
             </main>
 
+
             <%- include('../partials/footer') %>
         </div>
+
     </body>
 
 </html>

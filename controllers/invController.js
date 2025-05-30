@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
+const { validationResult } = require('express-validator');
 
 const invCont = {}
 
@@ -53,5 +54,47 @@ invCont.throwError = (req, res, next) => {
   }
 }
 
+invCont.managementView = (req, res) => {
+  const message = req.flash('message');
+  res.render('inventory/management', { message });
+}
+
+invCont.addClassificationView = (req, res) => {
+  const errors = []
+  const message = req.flash('message')
+  res.render('inventory/add-classification', { errors, message })
+}
+
+invCont.addClassificationProcess = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('inventory/add-classification', {
+      errors: errors.array(),
+      message: null,
+      classification_name: req.body.classification_name,
+    });
+  }
+
+  try {
+    const { classification_name } = req.body
+    const result = await invModel.insertClassification(classification_name)
+
+    if (result) {
+      req.flash('message', `Classification "${classification_name}" added successfully.`)
+      return res.redirect('/inv') // volta para a página de gerenciamento
+    } else {
+      res.render('inventory/add-classification', {
+        errors: [{ msg: 'Failed to add classification.' }],
+        message: null
+      })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).render('inventory/add-classification', {
+      errors: [{ msg: 'Server error.' }],
+      message: null
+    })
+  }
+}
 
 module.exports = invCont
