@@ -19,7 +19,9 @@ const accountRoute = require('./routes/accountRoute');
 const bodyParser = require("body-parser")
 /* ***********************
  * Middleware
- * ************************/
+ ************************/
+
+// Sessão
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -31,13 +33,19 @@ app.use(session({
   name: 'sessionId',
 }))
 
-// Express Messages Middleware
+// Flash messages
 app.use(require('connect-flash')())
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
-app.use("/account", accountRoute);
+
+// ✅ Body parser antes das rotas!
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// ✅ Agora sim: rotas que dependem do body
+app.use("/account", accountRoute)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 /* ***********************
