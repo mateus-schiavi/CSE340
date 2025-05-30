@@ -8,6 +8,10 @@ Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
+
+  // Aqui, o link fixo para adicionar novo carro:
+  list += '<li><a href="/inv/add-inventory" title="Add New Car">Add New Car</a></li>'
+
   data.rows.forEach((row) => {
     list += "<li>"
     list +=
