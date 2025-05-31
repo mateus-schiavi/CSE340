@@ -470,8 +470,47 @@ footer {
     background-color: #0056b3;
 }
 
-/* === Link de Login Ajustado === */
 .login-link {
     margin-top: 0.5rem;
     font-size: 0.9rem;
+}
+
+.register-container {
+  max-width: 500px;
+  margin: 1rem auto;
+  padding: 1.25rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.register-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* diminuído de 1rem */
+}
+
+.register-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* espaço entre label e input */
+}
+
+.register-form label {
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.register-form input {
+  padding: 10px; /* reduzido de 12px */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
 }

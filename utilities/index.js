@@ -90,6 +90,7 @@ Util.buildDetailHTML = function (vehicle) {
 
 Util.buildClassificationList = async function (classification_id = null) {
   const data = await invModel.getClassifications();
+  console.log("classifications data:", data.rows); 
   let classificationList = '<select name="classification_id" id="classificationList" required>';
   classificationList += "<option value=''>Choose a Classification</option>";
   data.rows.forEach((row) => {
@@ -100,6 +101,8 @@ Util.buildClassificationList = async function (classification_id = null) {
     classificationList += `>${row.classification_name}</option>`;
   });
   classificationList += "</select>";
+
+  console.log('classificationList:', classificationList);
   return classificationList;
 };
 

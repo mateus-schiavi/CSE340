@@ -21,7 +21,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
       grid,
     });
   } catch (error) {
-    next(error); // envia para o middleware de erro
+    next(error);
   }
 };
 
@@ -31,7 +31,8 @@ invCont.buildDetailView = async function (req, res, next) {
   try {
     const data = await invModel.getInventoryById(inv_id);
     if (!data) {
-      res.status(404).render("errors/404", { title: "Vehicle Not Found" });
+      const nav = await utilities.getNav();
+      return res.status(404).render("errors/404", { title: "Vehicle Not Found", nav });
     }
     const detailHTML = await utilities.buildDetailHTML(data);
     const nav = await utilities.getNav();
@@ -46,79 +47,107 @@ invCont.buildDetailView = async function (req, res, next) {
   }
 }
 
-invCont.throwError = (req, res, next) => {
+invCont.throwError = async (req, res, next) => {
   try {
-    throw new Error("Intentional server error triggered for testing")
+    throw new Error("Intentional server error triggered for testing");
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
-invCont.managementView = (req, res) => {
+invCont.managementView = async (req, res) => {
   const message = req.flash('message');
-  res.render('inventory/management', { message });
+  const nav = await utilities.getNav();
+  res.render('inventory/management', { title: 'Inventory Management', message, nav });
 }
 
-invCont.addClassificationView = (req, res) => {
-  const errors = []
-  const message = req.flash('message')
-  res.render('inventory/add-classification', { errors, message })
+invCont.addClassificationView = async (req, res) => {
+  const errors = [];
+  const message = req.flash('message');
+  const nav = await utilities.getNav();
+  res.render('inventory/add-classification', { title: 'Add Classification', errors, message, nav });
 }
 
 invCont.addClassificationProcess = async (req, res) => {
-  const errors = validationResult(req)
+  const errors = validationResult(req);
+  const nav = await utilities.getNav();
+
   if (!errors.isEmpty()) {
     return res.render('inventory/add-classification', {
+      title: 'Add Classification',
       errors: errors.array(),
       message: null,
       classification_name: req.body.classification_name,
+      nav
     });
   }
 
   try {
-    const { classification_name } = req.body
-    const result = await invModel.insertClassification(classification_name)
+    const { classification_name } = req.body;
+    const result = await invModel.insertClassification(classification_name);
 
     if (result) {
-      req.flash('message', `Classification "${classification_name}" added successfully.`)
-      return res.redirect('/inv') // volta para a página de gerenciamento
+      req.flash('message', `Classification "${classification_name}" added successfully.`);
+      return res.redirect('/inv');
     } else {
       res.render('inventory/add-classification', {
+        title: 'Add Classification',
         errors: [{ msg: 'Failed to add classification.' }],
-        message: null
-      })
+        message: null,
+        nav
+      });
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
     res.status(500).render('inventory/add-classification', {
+      title: 'Add Classification',
       errors: [{ msg: 'Server error.' }],
-      message: null
-    })
+      message: null,
+      nav
+    });
   }
 }
 
-invCont.addInventoryView = async (req, res) => {
-  const message = req.flash('message');
-  const errors = [];
-  const classificationList = await utilities.buildClassificationList();
-
-  res.render('inventory/add-inventory', {
-    message,
-    errors,
-    classificationList,
-  });
+invCont.addInventoryView = async (req, res, next) => {
+  try {
+    const message = req.flash('message');
+    const errors = [];
+    const classificationList = await utilities.buildClassificationList();
+    const nav = await utilities.getNav();
+    res.render('inventory/add-inventory', {
+      title: 'Add Inventory',
+      message,
+      errors,
+      classificationList,
+      nav,
+      inv_make: '',
+      inv_model: '',
+      inv_year: '',
+      inv_description: '',
+      inv_price: '',
+      inv_miles: '',
+      inv_color: '',
+      inv_image: '/images/no-image-available.png',
+      inv_thumbnail: '/images/no-image-available.png',
+    });
+  } catch (error) {
+    console.error('Error in addInventoryView:', error);
+    next(error);
+  }
 };
 
 invCont.addInventoryProcess = async (req, res) => {
   const errors = validationResult(req);
   const classificationList = await utilities.buildClassificationList(req.body.classification_id);
+  const nav = await utilities.getNav();
 
   if (!errors.isEmpty()) {
     return res.render('inventory/add-inventory', {
+      title: 'Add Inventory',
       message: null,
       errors: errors.array(),
       classificationList,
-      // envia os valores preenchidos para sticky form
+      nav,
       ...req.body
     });
   }
@@ -155,22 +184,25 @@ invCont.addInventoryProcess = async (req, res) => {
       return res.redirect('/inv');
     } else {
       res.render('inventory/add-inventory', {
+        title: 'Add Inventory',
         message: null,
         errors: [{ msg: 'Failed to add inventory item.' }],
         classificationList,
+        nav,
         ...req.body
       });
     }
   } catch (error) {
     console.error(error);
     res.status(500).render('inventory/add-inventory', {
+      title: 'Add Inventory',
       message: null,
       errors: [{ msg: 'Server error.' }],
       classificationList,
+      nav,
       ...req.body
     });
   }
 };
 
-
-module.exports = invCont
+module.exports = invCont;
