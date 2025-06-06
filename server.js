@@ -21,6 +21,7 @@ const bodyParser = require("body-parser")
 /* ***********************
  * Middleware
  ************************/
+app.use(utilities.checkJWTToken)
 app.use(cookieParser())
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
