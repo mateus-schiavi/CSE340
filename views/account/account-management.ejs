@@ -1,0 +1,18 @@
+<main class="account-management">
+    <% if (title) { %>
+    <h1><%= title %></h1>
+    <% } %>
+
+    <%- messages() %>
+
+    <section class="welcome-message">
+        <p class="message">You're logged in, <strong><%= account_firstname %></strong>!</p>
+    </section>
+
+    <section class="account-actions">
+        <a href="/account/edit" class="btn btn-primary">Edit Account Information</a>
+        <form action="/account/logout" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-logout">Logout</button>
+        </form>
+    </section>
+</main>
