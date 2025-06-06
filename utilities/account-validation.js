@@ -91,4 +91,91 @@ validate.checkLoginData = async (req, res, next) => {
   next()
 }
 
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("First name must be at least 2 characters long."),
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Last name must be at least 2 characters long."),
+    body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+      .custom(async (account_email, { req }) => {
+        const account_id = req.accountData.account_id;
+        const currentAccount = await accountModel.getAccountById(account_id);
+
+        if (currentAccount.account_email !== account_email) {
+          const existingAccount = await accountModel.getAccountByEmail(account_email);
+          if (existingAccount) {
+            throw new Error("Email already exists. Please use a different email.");
+          }
+        }
+      }),
+  ];
+};
+
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const accountData = req.accountData;
+
+    res.render("account/edit", {
+      title: "Edit Account Information",
+      accountData,
+      errors: errors.array(),
+      account_firstname: req.body.account_firstname,
+      account_lastname: req.body.account_lastname,
+      account_email: req.body.account_email,
+      message: req.flash(),
+    });
+    return;
+  }
+  next();
+};
+
+validate.updatePasswordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .isLength({ min: 8 })
+      .withMessage("Password must be at least 8 characters long."),
+    body("account_password_confirm")
+      .trim()
+      .custom((value, { req }) => {
+        if (value !== req.body.account_password) {
+          throw new Error("Passwords do not match.");
+        }
+        return true;
+      }),
+  ];
+};
+
+validate.checkUpdatePasswordData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const accountData = req.accountData;
+
+    res.render("account/edit", {
+      title: "Edit Account Information",
+      accountData,
+      errors: errors.array(),
+      message: req.flash(),
+    });
+    return;
+  }
+  next();
+};
+
 module.exports = validate;

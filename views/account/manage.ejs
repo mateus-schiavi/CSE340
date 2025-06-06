@@ -1,0 +1,10 @@
+<%- include('../partials/header') %>
+
+<h1>Manage Your Account</h1>
+
+<p>Welcome, <%= accountData.firstname %> <%= accountData.lastname %>!</p>
+<p>Email: <%= accountData.email %></p>
+
+<a href="/account/logout">Logout</a>
+
+<%- include('../partials/footer') %>

@@ -1,18 +1,13 @@
-<main class="account-management">
-    <% if (title) { %>
-    <h1><%= title %></h1>
+<section class="account-greeting">
+    <% if (account_type === "Client") { %>
+    <h2>Welcome <%= account_firstname %></h2>
+    <a href="/account/edit" class="btn btn-link">Update Account Information</a>
+    <% } else if (account_type === "Employee" || account_type === "Admin") { %>
+    <h2>Welcome <%= account_firstname %></h2>
+
+    <a href="/account/edit" class="btn btn-link">Update Account Information</a>
+
+    <h3>Inventory Management</h3>
+    <p><a href="/inventory/manage">Go to Inventory Management</a></p>
     <% } %>
-
-    <%- messages() %>
-
-    <section class="welcome-message">
-        <p class="message">You're logged in, <strong><%= account_firstname %></strong>!</p>
-    </section>
-
-    <section class="account-actions">
-        <a href="/account/edit" class="btn btn-primary">Edit Account Information</a>
-        <form action="/account/logout" method="POST" style="display:inline;">
-            <button type="submit" class="btn btn-logout">Logout</button>
-        </form>
-    </section>
-</main>
+</section>
