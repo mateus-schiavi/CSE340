@@ -58,7 +58,14 @@ invCont.throwError = async (req, res, next) => {
 invCont.managementView = async (req, res) => {
   const message = req.flash('message');
   const nav = await utilities.getNav();
-  res.render('inventory/management', { title: 'Inventory Management', message, nav });
+  const classificationSelect = await utilities.buildClassificationList();
+  res.render('inventory/management',
+    {
+      title: 'Inventory Management',
+      message,
+      nav,
+      classificationSelect
+    });
 }
 
 invCont.addClassificationView = async (req, res) => {
