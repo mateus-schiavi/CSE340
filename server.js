@@ -5,6 +5,7 @@
 /* ***********************
  * Require Statements
  *************************/
+const cookieParser = require('cookie-parser')
 const session = require("express-session")
 const pool = require('./database/')
 const express = require("express")
@@ -20,8 +21,7 @@ const bodyParser = require("body-parser")
 /* ***********************
  * Middleware
  ************************/
-
-// Sessão
+app.use(cookieParser())
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -40,11 +40,9 @@ app.use(function (req, res, next) {
   next()
 })
 
-// ✅ Body parser antes das rotas!
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// ✅ Agora sim: rotas que dependem do body
 app.use("/account", accountRoute)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
