@@ -22,7 +22,29 @@ const bodyParser = require("body-parser")
  * Middleware
  ************************/
 app.use(cookieParser())
+
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
 app.use(utilities.checkJWTToken)
+
+app.use(require('connect-flash')())
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,

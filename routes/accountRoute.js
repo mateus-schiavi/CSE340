@@ -13,12 +13,18 @@ router.post("/login",
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
 router.post("/register", utilities.handleErrors(accountController.registerAccount))
 
-// Rota para a página de gerenciamento da conta (proteção com checkLogin)
 router.get(
     "/",
     utilities.checkJWTToken,
     utilities.checkLogin,
     utilities.handleErrors(accountController.buildManagement)
 )
+
+router.post("/logout", utilities.handleErrors((req, res) => {
+    res.clearCookie("jwt");
+    req.flash("notice", "You have been logged out.");
+    res.redirect("/");
+}));
+
 
 module.exports = router
