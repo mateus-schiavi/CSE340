@@ -1,25 +1,27 @@
 const express = require("express")
 const router = new express.Router()
 const invController = require("../controllers/invController")
-const utilities = require('../utilities');
 const { body } = require("express-validator")
+const utilities = require('../utilities')
+const invValidate = require("../utilities/inventory-validation")
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+router.get("/type/:classificationId", invController.buildByClassificationId)
 
 // Route to management view (task 1)
-router.get("/", invController.managementView);
-router.get('/add-inventory', invController.addInventoryView);
+router.get("/", invController.managementView)
+router.get("/add-inventory", invController.addInventoryView)
+
 // Route to build single vehicle detail view
-router.get("/detail/:inv_id", invController.buildDetailView);
+router.get("/detail/:inv_id", invController.buildDetailView)
 
 // Route to trigger intentional error (task 3)
-router.get("/trigger-error", invController.throwError);
+router.get("/trigger-error", invController.throwError)
 
 // === TASK 2 - Add classification routes ===
 
 // Show add classification form
-router.get("/classification/add", invController.addClassificationView);
+router.get("/classification/add", invController.addClassificationView)
 
 // Process add classification form (with server-side validation)
 router.post(
@@ -29,37 +31,44 @@ router.post(
     .matches(/^[A-Za-z0-9]+$/)
     .withMessage("No spaces or special characters allowed"),
   invController.addClassificationProcess
-);
+)
 
+// Add inventory (cleaned up using validation middleware)
 router.post(
-  '/add-inventory',
-  [
-    body('classification_id').notEmpty().withMessage('Classification is required.'),
-    body('inv_make').trim().notEmpty().withMessage('Make is required.'),
-    body('inv_model').trim().notEmpty().withMessage('Model is required.'),
-    body('inv_year').isInt({ min: 1900, max: 2099 }).withMessage('Year must be between 1900 and 2099.'),
-    body('inv_description').trim().notEmpty().withMessage('Description is required.'),
-    body('inv_price').isFloat({ min: 0 }).withMessage('Price must be a positive number.'),
-    body('inv_miles').isInt({ min: 0 }).withMessage('Miles must be a positive integer.'),
-    body('inv_color').trim().notEmpty().withMessage('Color is required.'),
-    // image and thumbnail can be optional or validated as strings
-  ],
-  invController.addInventoryProcess
-);
-router.get(
-  "/getInventory/:classification_id",
-  utilities.handleErrors(invController.getInventoryJSON)
-);
+  "/add-inventory",
+  invValidate.inventoryRules(),
+  invValidate.checkInventoryData,
+  utilities.handleErrors(invController.addInventoryProcess)
+)
 
+// Get inventory JSON
 router.get(
   "/getInventory/:classification_id",
   utilities.handleErrors(invController.getInventoryJSON)
-);
+)
 
 // Nova rota para página de edição do inventário
 router.get(
   "/edit/:inv_id",
   utilities.handleErrors(invController.editInventoryView)
-);
+)
+
+// Route to process inventory update (Task 4)
+router.post(
+  "/update",
+  invValidate.inventoryRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+)
+
+router.get(
+  "/delete/:inv_id",
+  utilities.handleErrors(invController.deleteConfirmView)
+)
+
+router.post(
+  "/delete",
+  utilities.handleErrors(invController.deleteInventory)
+)
 
 module.exports = router;
