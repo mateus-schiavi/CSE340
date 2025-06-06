@@ -1,4 +1,6 @@
 const invModel = require("../models/inventory-model")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const Util = {}
 
 /* ************************
@@ -90,7 +92,7 @@ Util.buildDetailHTML = function (vehicle) {
 
 Util.buildClassificationList = async function (classification_id = null) {
   const data = await invModel.getClassifications();
-  console.log("classifications data:", data.rows); 
+  console.log("classifications data:", data.rows);
   let classificationList = '<select name="classification_id" id="classificationList" required>';
   classificationList += "<option value=''>Choose a Classification</option>";
   data.rows.forEach((row) => {
@@ -108,4 +110,4 @@ Util.buildClassificationList = async function (classification_id = null) {
 
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
-module.exports = Util
+module.exports = Util;
