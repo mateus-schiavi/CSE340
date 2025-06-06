@@ -1,6 +1,7 @@
 const express = require("express")
 const router = new express.Router()
 const invController = require("../controllers/invController")
+const utilities = require('../utilities');
 const { body } = require("express-validator")
 
 // Route to build inventory by classification view
@@ -44,6 +45,21 @@ router.post(
     // image and thumbnail can be optional or validated as strings
   ],
   invController.addInventoryProcess
+);
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
+// Nova rota para página de edição do inventário
+router.get(
+  "/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView)
 );
 
 module.exports = router;

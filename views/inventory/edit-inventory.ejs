@@ -2,13 +2,13 @@
 <html lang="en">
 
     <head>
-        <title>Add New Inventory Item - CSE Motors</title>
+        <title><%= title %> - CSE Motors</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
 
     <body>
         <div class="register-container">
-            <h1>Add New Inventory Item</h1>
+            <h1><%= title %></h1>
 
             <% if (errors && errors.length > 0) { %>
             <ul>
@@ -22,10 +22,13 @@
             <p class="flash-message"><%= message %></p>
             <% } %>
 
-            <form class="register-form" action="/inv/add-inventory" method="POST" novalidate>
+            <form class="register-form" action="/inv/update" method="POST" novalidate>
+                <!-- Hidden field with inv_id -->
+                <input type="hidden" name="inv_id" value="<%= inv_id %>">
+
                 <div class="form-group">
                     <label for="classification_id">Classification:</label>
-                    <%- classificationList %>
+                    <%- classificationSelect %>
                 </div>
 
                 <div class="form-group">
@@ -79,7 +82,7 @@
                         value="<%= inv_thumbnail || '/images/no-image-available.png' %>" />
                 </div>
 
-                <button type="submit">Add Inventory Item</button>
+                <button type="submit">Update Vehicle</button>
             </form>
         </div>
     </body>
