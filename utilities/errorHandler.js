@@ -5,7 +5,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(500).render("error", {
     title: "Server Error",
     message: err.message,
-    error: err, // importante para mostrar o stack trace
+    error: err,
   })
 }
 
