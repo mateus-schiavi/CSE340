@@ -1,0 +1,26 @@
+<h1>Checkout</h1>
+
+<%- messages() %>
+
+<h2>Delivery Information</h2>
+
+<form action="/order/checkout" method="post" class="checkout-form">
+    <label for="delivery_address">Delivery Address</label>
+    <input type="text" name="delivery_address" id="delivery_address" required>
+
+    <label for="receiver_name">Receiver Name</label>
+    <input type="text" name="receiver_name" id="receiver_name" required>
+
+    <h2>Order Summary</h2>
+    <ul>
+        <% cartItems.forEach(item => { %>
+        <li>
+            <%= item.inv_make %> <%= item.inv_model %> (<%= item.inv_year %>)
+            - Quantity: <%= item.quantity %>
+            - Price: $<%= item.inv_price %> each
+        </li>
+        <% }) %>
+    </ul>
+
+    <button type="submit" class="btn btn-primary">Confirm Purchase</button>
+</form>

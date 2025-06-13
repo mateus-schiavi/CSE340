@@ -156,7 +156,7 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
 const cartRoute = require("./routes/cartRoute")
 const utilities = require("./utilities")
-
+const orderRoute = require("./routes/orderRoutes");
 /* =======================
  * Middleware
  ========================= */
@@ -187,7 +187,6 @@ app.use((req, res, next) => {
 
 // JWT Middleware
 app.use(utilities.checkJWTToken)
-
 // Body Parsers
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -206,7 +205,7 @@ app.use("/", static)
 app.use("/inv", inventoryRoute)
 app.use("/account", accountRoute)
 app.use("/cart", cartRoute)
-
+app.use("/order", orderRoute);
 // Home
 app.get("/", utilities.handleErrors(baseController.buildHome))
 

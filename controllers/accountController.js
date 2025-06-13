@@ -54,11 +54,9 @@ async function buildManagement(req, res, next) {
       }
     }
 
-
     res.render("account/account-management", {
       title: "Your Account",
       nav,
-      message: req.flash(),
       account_firstname: accountData.account_firstname,
       account_type: accountData.account_type,
       account_id: accountData.account_id,
@@ -68,6 +66,7 @@ async function buildManagement(req, res, next) {
     next(error);
   }
 }
+
 
 
 /* ****************************************

@@ -48,9 +48,16 @@ async function removeCarFromCart(account_id, car_id) {
   }
 }
 
+async function clearCart(account_id) {
+  const sql = `DELETE FROM carts WHERE account_id = $1`;
+  await db.query(sql, [account_id]);
+}
+
+
 
 module.exports = {
   getCartByAccountId,
   addCarToCart,
   removeCarFromCart,
+  clearCart,
 }
