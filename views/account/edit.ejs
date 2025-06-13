@@ -1,54 +1,68 @@
-<main class="account-edit">
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head', { title: title }) %>
 
-    <% if (title) { %>
-    <h1><%= title %></h1>
-    <% } %>
+    <body>
+        <div id="wrapper">
+            <%- include('../partials/header') %>
+            <%- include('../partials/navigation') %>
 
-    <%- messages() %>
+            <main class="account-edit">
+                <% if (title) { %>
+                <h1><%= title %></h1>
+                <% } %>
 
-    <section class="account-update">
-        <h2>Account Update</h2>
-        <form action="/account/edit" method="POST" novalidate>
-            <div class="form-group">
-                <label for="account_firstname">First Name:</label>
-                <input type="text" id="account_firstname" name="account_firstname"
-                    value="<%= accountData.account_firstname || '' %>" required minlength="2" maxlength="50" />
-            </div>
+                <%- messages() %>
 
-            <div class="form-group">
-                <label for="account_lastname">Last Name:</label>
-                <input type="text" id="account_lastname" name="account_lastname"
-                    value="<%= accountData.account_lastname || '' %>" required minlength="2" maxlength="50" />
-            </div>
+                <section class="account-update">
+                    <h2>Account Update</h2>
+                    <form action="/account/edit" method="POST" novalidate>
+                        <div class="form-group">
+                            <label for="account_firstname">First Name:</label>
+                            <input type="text" id="account_firstname" name="account_firstname"
+                                value="<%= accountData.account_firstname || '' %>" required minlength="2"
+                                maxlength="50" />
+                        </div>
 
-            <div class="form-group">
-                <label for="account_email">Email Address:</label>
-                <input type="email" id="account_email" name="account_email"
-                    value="<%= accountData.account_email || '' %>" required />
-            </div>
+                        <div class="form-group">
+                            <label for="account_lastname">Last Name:</label>
+                            <input type="text" id="account_lastname" name="account_lastname"
+                                value="<%= accountData.account_lastname || '' %>" required minlength="2"
+                                maxlength="50" />
+                        </div>
 
-            <button type="submit" class="btn btn-primary">Update Account</button>
-        </form>
-    </section>
+                        <div class="form-group">
+                            <label for="account_email">Email Address:</label>
+                            <input type="email" id="account_email" name="account_email"
+                                value="<%= accountData.account_email || '' %>" required />
+                        </div>
 
-    <!-- Formulário para alterar senha -->
-    <section class="password-change" style="margin-top: 2rem;">
-        <h2>Change Password</h2>
-        <form action="/account/edit-password" method="POST" novalidate>
-            <div class="form-group">
-                <label for="account_password">New Password:</label>
-                <input type="password" id="account_password" name="account_password" minlength="8" required
-                    placeholder="Enter new password" />
-            </div>
+                        <button type="submit" class="btn btn-primary">Update Account</button>
+                    </form>
+                </section>
 
-            <div class="form-group">
-                <label for="account_password_confirm">Confirm Password:</label>
-                <input type="password" id="account_password_confirm" name="account_password_confirm" minlength="8"
-                    required placeholder="Confirm new password" />
-            </div>
+                <section class="password-change" style="margin-top: 2rem;">
+                    <h2>Change Password</h2>
+                    <form action="/account/edit-password" method="POST" novalidate>
+                        <div class="form-group">
+                            <label for="account_password">New Password:</label>
+                            <input type="password" id="account_password" name="account_password" minlength="8" required
+                                placeholder="Enter new password" />
+                        </div>
 
-            <button type="submit" class="btn btn-primary">Change Password</button>
-        </form>
-    </section>
+                        <div class="form-group">
+                            <label for="account_password_confirm">Confirm Password:</label>
+                            <input type="password" id="account_password_confirm" name="account_password_confirm"
+                                minlength="8" required placeholder="Confirm new password" />
+                        </div>
 
-</main>
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </form>
+                </section>
+            </main>
+
+            <%- include('../partials/footer') %>
+        </div>
+    </body>
+
+</html>

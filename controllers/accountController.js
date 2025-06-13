@@ -1,5 +1,6 @@
 // controllers/accountController.js
-
+const cartModel = require('../models/cart-model');
+const inventoryModel = require('../models/inventory-model');
 const utilities = require("../utilities");
 const accountModel = require("../models/account-model");
 const bcrypt = require("bcryptjs");
@@ -36,17 +37,36 @@ async function buildRegister(req, res, next) {
  *  Deliver account management view
  * *************************************** */
 async function buildManagement(req, res, next) {
-  let nav = await utilities.getNav();
-  const accountData = req.accountData;
+  try {
+    let nav = await utilities.getNav();
+    const accountData = req.accountData;
 
-  res.render("account/account-management", {
-    title: "Account Management",
-    nav,
-    message: req.flash(),
-    account_firstname: accountData.account_firstname,
-    account_type: accountData.account_type,
-    account_id: accountData.account_id,
-  });
+    const cart = await cartModel.getCartByAccountId(accountData.account_id) || [];
+
+    const detailedCartItems = [];
+    for (const item of cart) {
+      const car = await inventoryModel.getInventoryById(item.car_id);
+      if (car) {
+        detailedCartItems.push({
+          ...car,
+          quantity: item.quantity,
+        });
+      }
+    }
+
+
+    res.render("account/account-management", {
+      title: "Your Account",
+      nav,
+      message: req.flash(),
+      account_firstname: accountData.account_firstname,
+      account_type: accountData.account_type,
+      account_id: accountData.account_id,
+      cartItems: detailedCartItems,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 
@@ -153,18 +173,23 @@ async function accountLogin(req, res, next) {
 /* ****************************************
  *  Deliver Edit Account View
  * *************************************** */
+
 async function buildEditView(req, res, next) {
   try {
+    const nav = await utilities.getNav();
     const accountData = await accountModel.getAccountById(req.accountData.account_id);
 
     res.render("account/edit", {
       title: "Edit Account Information",
+      nav,
       accountData,
+      message: req.flash(),
     });
   } catch (error) {
     next(error);
   }
 }
+
 
 /* ****************************************
  *  Process Account Information Update

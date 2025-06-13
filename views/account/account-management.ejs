@@ -37,7 +37,22 @@
                         <% } else if (account_type === "Client") { %>
                         <h2>Your Account</h2>
                         <p>View your orders, update your info, and more.</p>
+
+                        <% if (cartItems && cartItems.length > 0) { %>
+                        <h3>Your Cart</h3>
+                        <ul class="cart-items-list">
+                            <% cartItems.forEach(function(car) { %>
+                            <li>
+                                <strong><%= car.inv_make %> <%= car.inv_model %> (<%= car.inv_year %>)</strong>
+                                — Quantity: <%= car.quantity %>
+                            </li>
+                            <% }) %>
+                        </ul>
+                        <% } else { %>
+                        <p>Your cart is empty.</p>
                         <% } %>
+                        <% } %>
+
                     </section>
 
                     <section class="account-section">

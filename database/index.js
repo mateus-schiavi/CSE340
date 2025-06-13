@@ -11,7 +11,6 @@ if (process.env.NODE_ENV === "development") {
     },
   })
 } else {
-  // Em produção, habilita SSL (Render exige), com rejectUnauthorized false para evitar erros com certificados
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
