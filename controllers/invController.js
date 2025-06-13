@@ -37,10 +37,15 @@ invCont.buildDetailView = async function (req, res, next) {
     const detailHTML = await utilities.buildDetailHTML(data);
     const nav = await utilities.getNav();
 
+    // Pegue o account_id do usuário logado, se houver
+    const account_id = req.accountData ? req.accountData.account_id : null;
+
     res.render("./inventory/details", {
       title: `${data.inv_make} ${data.inv_model}`,
       nav,
       detailHTML,
+      vehicle: data,
+      account_id,
     });
   } catch (error) {
     next(error);

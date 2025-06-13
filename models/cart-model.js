@@ -1,5 +1,5 @@
 // models/cart-model.js
-const db = require('../database'); // importa o módulo que exporta query()
+const db = require('../database'); 
 
 
 async function getCartByAccountId(account_id) {
@@ -15,9 +15,7 @@ async function getCartByAccountId(account_id) {
 }
 
 
-// Adiciona carro no carrinho
 async function addCarToCart(account_id, car_id) {
-  // Você pode fazer uma lógica para incrementar quantidade ou inserir novo item
   const sql = `
     INSERT INTO carts (account_id, car_id)
     VALUES ($1, $2)
@@ -28,7 +26,17 @@ async function addCarToCart(account_id, car_id) {
   await db.query(sql, values)
 }
 
+async function removeCarFromCart(account_id, car_id) {
+  const sql = `
+    DELETE FROM carts WHERE account_id = $1 AND car_id = $2
+  `
+  const values = [account_id, car_id]
+  await db.query(sql, values)
+}
+
+
 module.exports = {
   getCartByAccountId,
   addCarToCart,
+  removeCarFromCart,
 }

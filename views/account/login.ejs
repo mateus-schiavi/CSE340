@@ -1,37 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-    <%- include('../partials/head', { title: 'Login - CSE Motors' }) %>
+<h1>Login</h1>
 
-    <body>
-        <div id="wrapper">
-            <%- include('../partials/header') %>
-            <%- include('../partials/navigation') %>
+<form id="loginForm" action="/account/login" method="POST">
+    <div class="form-group">
+        <input type="email" id="account_email" name="account_email" placeholder="Email" required>
+    </div>
 
-            <main class="login-main">
-                <form id="loginForm" action="/account/login" method="POST">
-                    <div class="form-group">
-                        <input type="email" id="account_email" name="account_email" placeholder="Email" required>
-                    </div>
+    <div class="form-group">
+        <span class="password-hint">
+            Passwords must be at least 12 characters and contain at least 1 number,
+            1 capital letter, and 1 special character.
+        </span>
+        <input type="password" id="account_password" name="account_password" placeholder="Password" required
+            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+    </div>
 
-                    <div class="form-group">
-                        <span class="password-hint">
-                            Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter,
-                            and 1 special character.
-                        </span>
-                        <input type="password" id="account_password" name="account_password" placeholder="Password"
-                            required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
-                    </div>
+    <button type="submit" class="login-button">LOGIN</button>
 
-                    <button type="submit" class="login-button">LOGIN</button>
-
-                    <div class="signup-link">
-                        <p>No account? <a href="/account/register">Sign-up</a></p>
-                    </div>
-                </form>
-            </main>
-
-            <%- include('../partials/footer') %>
-        </div>
-    </body>
-
-</html>
+    <div class="signup-link">
+        <p>No account? <a href="/account/register">Sign-up</a></p>
+    </div>
+</form>

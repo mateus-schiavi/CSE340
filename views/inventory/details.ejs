@@ -1,4 +1,12 @@
 <main>
   <h1><%= title %></h1>
   <%- detailHTML %>
+
+  <% if (account_id) { %>
+  <form action="/cart/add/<%= vehicle.inv_id %>" method="post" style="margin-top: 1em;">
+    <button type="submit" class="btn btn-primary">Add to Cart</button>
+  </form>
+  <% } else { %>
+  <p><a href="/account/login">Log in</a> to add this vehicle to your cart.</p>
+  <% } %>
 </main>

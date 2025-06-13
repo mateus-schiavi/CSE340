@@ -1,71 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-    <%- include('../partials/head', { title: 'Account Management - CSE Motors' }) %>
+<h1>Account Management</h1>
+<%- messages() %>
 
-    <body>
-        <div id="wrapper">
-            <%- include('../partials/header') %>
-            <%- include('../partials/navigation') %>
+<section id="account-hero">
+    <div class="account-hero-content">
+        <h2>Welcome, <%= account_firstname %></h2>
+        <ul>
+            <li>Access your dashboard</li>
+            <li>Manage your data</li>
+            <li>Secure area</li>
+        </ul>
+        <a href="/account/edit" class="btn btn-primary">Update Account Information</a>
+    </div>
+    <img src="/images/profile-dashboard.jpg" alt="Profile Dashboard" class="account-hero-image">
+</section>
 
-            <main>
-                <h1>Account Management</h1>
-                <%- messages() %>
+<div class="account-two-column">
+    <section class="account-section">
+        <% if (account_type === "Admin") { %>
+        <h2>Admin Dashboard</h2>
+        <p><a href="/inventory/manage">Go to Inventory Management</a></p>
+        <p><a href="/reports">View Reports</a></p>
+        <p><a href="/account/users">Manage Users</a></p>
+        <% } else if (account_type === "Employee") { %>
+        <h2>Employee Dashboard</h2>
+        <p><a href="/inventory/manage">Go to Inventory Management</a></p>
+        <% } else if (account_type === "Client") { %>
+        <h2>Your Account</h2>
+        <p>View your orders, update your info, and more.</p>
 
-                <section id="account-hero">
-                    <div class="account-hero-content">
-                        <h2>Welcome, <%= account_firstname %></h2>
-                        <ul>
-                            <li>Access your dashboard</li>
-                            <li>Manage your data</li>
-                            <li>Secure area</li>
-                        </ul>
-                        <a href="/account/edit" class="btn btn-primary">Update Account Information</a>
-                    </div>
-                    <img src="/images/profile-dashboard.jpg" alt="Profile Dashboard" class="account-hero-image">
-                </section>
+        <% if (cartItems && cartItems.length > 0) { %>
+        <h3>Your Cart</h3>
+        <ul class="cart-items-list">
+            <% cartItems.forEach(function(car) { %>
+            <li>
+                <strong><%= car.inv_make %> <%= car.inv_model %> (<%= car.inv_year %>)</strong>
+                — Quantity: <%= car.quantity %>
 
-                <div class="account-two-column">
-                    <section class="account-section">
-                        <% if (account_type === "Admin") { %>
-                        <h2>Admin Dashboard</h2>
-                        <p><a href="/inventory/manage">Go to Inventory Management</a></p>
-                        <p><a href="/reports">View Reports</a></p>
-                        <p><a href="/account/users">Manage Users</a></p>
-                        <% } else if (account_type === "Employee") { %>
-                        <h2>Employee Dashboard</h2>
-                        <p><a href="/inventory/manage">Go to Inventory Management</a></p>
-                        <% } else if (account_type === "Client") { %>
-                        <h2>Your Account</h2>
-                        <p>View your orders, update your info, and more.</p>
-
-                        <% if (cartItems && cartItems.length > 0) { %>
-                        <h3>Your Cart</h3>
-                        <ul class="cart-items-list">
-                            <% cartItems.forEach(function(car) { %>
-                            <li>
-                                <strong><%= car.inv_make %> <%= car.inv_model %> (<%= car.inv_year %>)</strong>
-                                — Quantity: <%= car.quantity %>
-                            </li>
-                            <% }) %>
-                        </ul>
-                        <% } else { %>
-                        <p>Your cart is empty.</p>
-                        <% } %>
-                        <% } %>
-
-                    </section>
-
-                    <section class="account-section">
-                        <h2>Logout</h2>
-                        <form action="/account/logout" method="post" class="account-logout-form">
-                            <button type="submit" class="btn btn-danger">Logout</button>
-                        </form>
-                    </section>
+                <div class="cart-item-controls" style="display:inline-flex; gap:5px;">
+                    <form action="/cart/add/<%= car.car_id %>" method="post">
+                        <button type="submit" class="btn btn-secondary btn-sm">+</button>
+                    </form>
+                    <form action="/cart/remove/<%= car.car_id %>" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">-</button>
+                    </form>
                 </div>
-            </main>
+            </li>
+            <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Your cart is empty.</p>
+        <% } %>
+        <% } %>
+    </section>
 
-            <%- include('../partials/footer') %>
-        </div>
-    </body>
-
-</html>
+    <section class="account-section">
+        <form action="/account/logout" method="post" class="account-logout-form">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </section>
+</div>
