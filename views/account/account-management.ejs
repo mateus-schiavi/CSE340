@@ -37,16 +37,13 @@
                 — Quantity: <%= car.quantity %>
 
                 <div class="cart-item-controls" style="display:inline-flex; gap:5px;">
-                    <form action="/cart/add/<%= car.car_id %>" method="post">
-                        <button type="submit" class="btn btn-secondary btn-sm">+</button>
-                    </form>
-                    <form action="/cart/remove/<%= car.car_id %>" method="post">
-                        <button type="submit" class="btn btn-danger btn-sm">-</button>
-                    </form>
+                    <button class="btn btn-secondary btn-sm btn-add" data-inv-id="<%= car.inv_id %>">+</button>
+                    <button class="btn btn-danger btn-sm btn-remove" data-inv-id="<%= car.inv_id %>">-</button>
                 </div>
             </li>
             <% }) %>
         </ul>
+
         <% } else { %>
         <p>Your cart is empty.</p>
         <% } %>
