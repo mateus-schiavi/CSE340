@@ -43,11 +43,12 @@ async function buildManagement(req, res, next) {
     title: "Account Management",
     nav,
     message: req.flash(),
-    account_firstname: accountData ? accountData.account_firstname : null,
-    account_type: accountData ? accountData.account_type : null,
-    account_id: accountData ? accountData.account_id : null,
+    account_firstname: accountData.account_firstname,
+    account_type: accountData.account_type,
+    account_id: accountData.account_id,
   });
 }
+
 
 /* ****************************************
  *  Process registration

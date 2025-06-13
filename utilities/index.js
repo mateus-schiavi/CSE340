@@ -111,6 +111,18 @@ Util.buildClassificationList = async function (classification_id = null) {
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 /* ****************************************
+ * Middleware to prevent caching
+ * ************************************ */
+Util.noCache = (req, res, next) => {
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+  res.set("Pragma", "no-cache");
+  res.set("Expires", "0");
+  res.set("Surrogate-Control", "no-store");
+  next();
+};
+
+
+/* ****************************************
 * Middleware to check token validity
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
@@ -124,7 +136,7 @@ Util.checkJWTToken = (req, res, next) => {
           res.clearCookie("jwt");
           return res.redirect("/account/login");
         }
-        req.accountData = accountData;     // <-- Aqui!
+        req.accountData = accountData; 
         res.locals.accountData = accountData;
         res.locals.loggedin = 1;
         next();

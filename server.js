@@ -18,11 +18,13 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities")
 const accountRoute = require('./routes/accountRoute');
 const bodyParser = require("body-parser")
+const path = require('path');
+
 /* ***********************
  * Middleware
  ************************/
 app.use(cookieParser())
-
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,

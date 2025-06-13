@@ -22,13 +22,14 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 );
 
-// Management page (protected)
 router.get(
   "/",
   utilities.checkJWTToken,
   utilities.checkLogin,
+  utilities.noCache,
   utilities.handleErrors(accountController.buildManagement)
 );
+
 
 // Logout routes (POST e GET)
 router.post(
